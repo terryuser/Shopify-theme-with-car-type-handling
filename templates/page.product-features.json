@@ -1,0 +1,295 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "image_banner_QbjqwJ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_rTWQzf": {
+          "type": "heading",
+          "settings": {
+            "heading": "Proudly Made in Canada",
+            "heading_size": "h1"
+          }
+        },
+        "text_pyQmBM": {
+          "type": "text",
+          "settings": {
+            "text": "Local Craftsmanship, Superior Quality",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rTWQzf",
+        "text_pyQmBM"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/cutter_logo_web.jpg",
+        "image_2": "shopify:\/\/shop_images\/sewing_machine_hands_web.jpg",
+        "image_overlay_opacity": 70,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "rich_text_AyeFxj": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_KiymgU": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<strong>Local Craftsmanship, Tariff-Free Shipping<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "text_9M48nC": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At Mat Metrics, our car mats are designed and manufactured entirely in our Markham, Ontario workshop. While we import high-quality materials, every step of production happens locally—supporting Canadian jobs and ensuring a perfect fit for your vehicle.<br\/><br\/>As a small local business, we’re committed to quality, craftsmanship, and our community. Choose Mat Metrics for premium car mats made close to home.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KiymgU",
+        "text_9M48nC"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "image_banner_8kfeCg": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_ieFFDt": {
+          "type": "heading",
+          "settings": {
+            "heading": "Detachable Vinyl Carpet",
+            "heading_size": "h1"
+          }
+        },
+        "text_NUHhWr": {
+          "type": "text",
+          "settings": {
+            "text": "Effortless Cleaning, Superior Convenience",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_ieFFDt",
+        "text_NUHhWr"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG-20230708-WA0007.jpg",
+        "image_2": "shopify:\/\/shop_images\/WhatsApp_Image_2018-06-04_at_2.35.16_PM_1.jpeg",
+        "image_overlay_opacity": 70,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "rich_text_mjMxiz": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Vcyfzp": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<strong>Local Craftsmanship, Tariff-Free Shipping<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "text_jpiqDt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>What sets Mat Metrics apart is our innovative two-layer design. Unlike other full-coverage car mats, ours feature a detachable vinyl carpet on top. This unique layer allows for quick and easy cleaning—simply remove it, dust off, rinse, or vacuum as needed. The bottom layer stays securely in place and can be easily wiped down or vacuumed.<br\/><br\/>No need to wrestle with bulky mats or remove the entire set for cleaning. With Mat Metrics, maintaining a spotless interior is fast and hassle-free. Choose convenience without compromising on coverage.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Vcyfzp",
+        "text_jpiqDt"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "image_banner_3MUaM3": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_PyBCXk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Customizable Style",
+            "heading_size": "h1"
+          }
+        },
+        "text_hQaH8X": {
+          "type": "text",
+          "settings": {
+            "text": "Tailored to Your Taste",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_PyBCXk",
+        "text_hQaH8X"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG-20230708-WA0007.jpg",
+        "image_2": "shopify:\/\/shop_images\/WhatsApp_Image_2018-06-04_at_2.35.16_PM_1.jpeg",
+        "image_overlay_opacity": 70,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "rich_text_rChzRy": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_L6DqJE": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<strong>Local Craftsmanship, Tariff-Free Shipping<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "text_W8gbVf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Mat Metrics offers exceptional personalization options for your car mats. Choose from a variety of colors for both the detachable vinyl carpet and the bottom layer, so you can perfectly match your vehicle’s interior.<\/p><p>For the bottom layer, we offer three distinct stitch pattern styles, each available in a range of color options, giving you even more ways to customize your mats.<\/p><p>With Mat Metrics, you can create a look that’s uniquely yours, combining style and functionality in every detail.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_L6DqJE",
+        "text_W8gbVf"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "image_banner_mwd7HL": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_dFYNhd": {
+          "type": "heading",
+          "settings": {
+            "heading": "Complete Coverage & Anti-Slip Protection",
+            "heading_size": "h1"
+          }
+        },
+        "text_4hAcwq": {
+          "type": "text",
+          "settings": {
+            "text": "Stay Covered, Stay Safe",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_dFYNhd",
+        "text_4hAcwq"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG-20230708-WA0007.jpg",
+        "image_2": "shopify:\/\/shop_images\/WhatsApp_Image_2018-06-04_at_2.35.16_PM_1.jpeg",
+        "image_overlay_opacity": 70,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "rich_text_VUME87": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wJjq43": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "<strong>Local Craftsmanship, Tariff-Free Shipping<\/strong>",
+            "heading_size": "h1"
+          }
+        },
+        "text_RgALXj": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Mat Metrics car mats provide full coverage, ensuring your vehicle’s interior is protected from dirt, spills, and wear. Our unique two-layer design enhances this protection while offering customizable options for a personalized touch.<\/p><p>In addition to complete coverage, our mats feature an integrated anti-slip layer that keeps them securely in place. This safety feature prevents shifting, ensuring that your mats stay put while you drive, providing both protection and peace of mind.<\/p><p>With Mat Metrics, you get a perfect fit that covers every corner and stays where it should—offering both full coverage and reliable safety.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wJjq43",
+        "text_RgALXj"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_QbjqwJ",
+    "rich_text_AyeFxj",
+    "image_banner_8kfeCg",
+    "rich_text_mjMxiz",
+    "image_banner_3MUaM3",
+    "rich_text_rChzRy",
+    "image_banner_mwd7HL",
+    "rich_text_VUME87"
+  ]
+}

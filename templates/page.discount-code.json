@@ -1,0 +1,176 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "image_banner_dyKfUQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_KcjiRP": {
+          "type": "heading",
+          "settings": {
+            "heading": "Rideshare Drivers Discount Program",
+            "heading_size": "h1"
+          }
+        },
+        "text_WiWR8C": {
+          "type": "text",
+          "settings": {
+            "text": "Keep your ride clean and ready for the next passenger with our custom-fit mats - perfect for rideshare drivers dealing with everyday messes. Enjoy a one-time 15% discount once verified!",
+            "text_style": "body"
+          }
+        },
+        "buttons_deCdFA": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_KcjiRP",
+        "text_WiWR8C",
+        "buttons_deCdFA"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG-20230708-WA0018.jpg",
+        "image_overlay_opacity": 80,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "rich_text_3C3KGD": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_CUy3D8": {
+          "type": "heading",
+          "settings": {
+            "heading": "How It Works",
+            "heading_size": "h1"
+          }
+        },
+        "text_VckE8k": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Step 1:<\/strong> Click the button below, and verify your eligibility with <a href=\"https:\/\/verifypass.com\/\">VerifyPass<\/a>.<\/p>"
+          }
+        },
+        "text_E7xE3P": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Step 2:<\/strong> After verification, you'll receive a <strong>one-time discount code<\/strong> to apply during checkout.<\/p>"
+          }
+        },
+        "text_Wb8fR9": {
+          "type": "text",
+          "settings": {
+            "text": "<p><\/p><p><strong>Step 3: <\/strong>For future purchases, return to this page and repeat <strong>Step 1<\/strong>.<\/p>"
+          }
+        },
+        "button_NpPCJy": {
+          "type": "button",
+          "settings": {
+            "button_label": "GET DISCOUNT",
+            "button_link": "https:\/\/verifypass.com\/auth\/38f3b936a1",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_CUy3D8",
+        "text_VckE8k",
+        "text_E7xE3P",
+        "text_Wb8fR9",
+        "button_NpPCJy"
+      ],
+      "custom_css": [],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "multicolumn_RVAnBk": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_kwT8jp": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_MGmeMB": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QeqYcj": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_kwT8jp",
+        "column_MGmeMB",
+        "column_QeqYcj"
+      ],
+      "settings": {
+        "title": "Testimonials",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_dyKfUQ",
+    "rich_text_3C3KGD",
+    "multicolumn_RVAnBk"
+  ]
+}

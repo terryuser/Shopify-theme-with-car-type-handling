@@ -1,0 +1,39 @@
+<car-type-selector data-restricted='' data-product-id='{{ product.id }}'>
+  <p class='selector-label'>Select your car models</p>
+  <div class='selector-container'>
+    <div class='select'>
+      {% comment %} <label for="made_{{ section.id }}">Select Made</label> {% endcomment %}
+      <select class='select__select' data-type='made' name='made' id='made_{{ section.id }}'>
+        <option value=''>Select Make</option>
+        {% comment %}
+          Makes will be populated dynamically via JavaScript from the API:
+          https://mat-car-type-api.fly.dev/api/car_type_options/makes
+        {% endcomment %}
+      </select>
+    </div>
+    <div class='select disabled'>
+      {% comment %} <label for="model">Select Model</label> {% endcomment %}
+      <select class='car-type-selector select__select' data-type='model' name='model' disabled>
+        <option value=''>Select Model</option>
+        {% comment %}
+          Models will be populated dynamically via JavaScript from the API:
+          https://mat-car-type-api.fly.dev/api/car_type_options/models/{make}
+        {% endcomment %}
+      </select>
+    </div>
+
+    <div class='select disabled'>
+      {% comment %} <label for="year">Select Year</label> {% endcomment %}
+      <select class='car-type-selector select__select' data-type='year' name='year' disabled>
+        <option value=''>Select Year</option>
+        {% comment %}
+          Years will be populated dynamically via JavaScript from the API:
+          https://mat-car-type-api.fly.dev/api/car_type_options/years/{make}/{model}
+        {% endcomment %}
+      </select>
+    </div>
+  </div>
+</car-type-selector>
+
+{{ 'car-type-selector.css' | asset_url | stylesheet_tag }}
+<script src='{{ 'car-type-selector.js' | asset_url }}' defer='defer'></script>

@@ -1,0 +1,75 @@
+car-type-selector {
+  background: var(--color-badge-foreground);
+}
+
+car-type-selector .selector-label {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+car-type-selector .selector-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+car-type-selector .selector-container .select {
+  margin: 0.7rem 0.5rem 0.2rem 0;
+}
+
+car-type-selector select {
+  font-size: 1.4rem !important;
+}
+
+car-type-selector select:disabled {
+  cursor: not-allowed; /* Set pointer to cross when select is disabled */
+  opacity: 0.5; /* Set opacity to 50% when select is disabled */
+}
+
+car-type-selector .select.disabled:after {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
+    rgba(var(--color-foreground), 0.1);
+}
+
+car-type-selector .select.disabled:hover:after {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width))
+    rgba(var(--color-foreground), 0.1);
+}
+
+/* 
+car-type-selector label {
+  border: var(--variant-pills-border-width) solid
+    rgba(var(--color-foreground), var(--variant-pills-border-opacity));
+  border-radius: var(--variant-pills-radius);
+  padding: 1rem 2rem;
+}
+
+car-type-selector select {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: absolute;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  opacity: 0;
+} */
+
+/* Cart Item Car Type Display */
+.cart-item__car-type {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #505050;
+  line-height: 1.2;
+}
+
+.cart-item__car-type-label {
+  font-weight: 500;
+}
+
+.cart-item__car-type-value {
+  font-style: italic;
+}

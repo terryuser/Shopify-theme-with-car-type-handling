@@ -1,0 +1,327 @@
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "slide-0": {
+          "type": "slide",
+          "settings": {
+            "heading": "Where Style Meets Ultimate Protection.",
+            "heading_size": "h1",
+            "subheading": "Transform your ride with custom-fit mats today.",
+            "button_label": "SHOP NOW",
+            "link": "shopify:\/\/collections\/product",
+            "button_style_secondary": false,
+            "box_align": "middle-left",
+            "show_text_box": false,
+            "text_alignment": "left",
+            "image_overlay_opacity": 20,
+            "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_kP999R": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "heading": "Exclusive Discount for Rideshare Drivers",
+            "heading_size": "h1",
+            "subheading": "Keep your ride clean and ready for the next passenger.",
+            "button_label": "GET YOUR DISCOUNT HERE",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-left",
+            "show_text_box": false,
+            "text_alignment": "left",
+            "image_overlay_opacity": 80,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_qJGCdU": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "heading": "Exclusive Discount for Construction Workers",
+            "heading_size": "h1",
+            "subheading": "Keep your car clean after every site visit.",
+            "button_label": "GET YOUR DISCOUNT HERE",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-left",
+            "show_text_box": true,
+            "text_alignment": "left",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide-0",
+        "slide_kP999R",
+        "slide_qJGCdU"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "large",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "image_banner_VqkXGt": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_KYFVYx": {
+          "type": "heading",
+          "settings": {
+            "heading": "Proudly Made in Canada",
+            "heading_size": "h1"
+          }
+        },
+        "text_rLX69c": {
+          "type": "text",
+          "settings": {
+            "text": "Crafted locally in Markham with imported materials. Quality you can trust, made close to home.",
+            "text_style": "body"
+          }
+        },
+        "buttons_HV8jhY": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Learn More",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_KYFVYx",
+        "text_rLX69c",
+        "buttons_HV8jhY"
+      ],
+      "custom_css": [],
+      "settings": {
+        "image_overlay_opacity": 70,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "image_banner_jkhtkE": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Nn6GNd": {
+          "type": "heading",
+          "settings": {
+            "heading": "Detachable Vinyl Carpet",
+            "heading_size": "h1"
+          }
+        },
+        "text_JpxJwK": {
+          "type": "text",
+          "settings": {
+            "text": "Two-layer design for effortless cleaning. Just remove, dust off, and wipe down.",
+            "text_style": "body"
+          }
+        },
+        "buttons_zrUcG7": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Learn More",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_Nn6GNd",
+        "text_JpxJwK",
+        "buttons_zrUcG7"
+      ],
+      "custom_css": [],
+      "settings": {
+        "image_overlay_opacity": 70,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "image_banner_kWfGhP": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_9aMFXB": {
+          "type": "heading",
+          "settings": {
+            "heading": "Customizable Style",
+            "heading_size": "h1"
+          }
+        },
+        "text_xkmGyP": {
+          "type": "text",
+          "settings": {
+            "text": "Choose your colours and stitch patterns. Personalize your car mats your way.",
+            "text_style": "body"
+          }
+        },
+        "buttons_jecfVC": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Learn More",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_9aMFXB",
+        "text_xkmGyP",
+        "buttons_jecfVC"
+      ],
+      "custom_css": [],
+      "settings": {
+        "image_overlay_opacity": 50,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "image_banner_tDjemq": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_xQXBgU": {
+          "type": "heading",
+          "settings": {
+            "heading": "Complete Coverage & Anti-Slip Protection",
+            "heading_size": "h1"
+          }
+        },
+        "text_4pCtDW": {
+          "type": "text",
+          "settings": {
+            "text": "Full protection that stays in place. No gaps, no slips—just a perfect fit.",
+            "text_style": "body"
+          }
+        },
+        "buttons_HDpQ4a": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Learn More",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xQXBgU",
+        "text_4pCtDW",
+        "buttons_HDpQ4a"
+      ],
+      "settings": {
+        "image_overlay_opacity": 70,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "accent-2",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "featured-collection-0": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Our Collections",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "frontpage",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-22e8129d-b410-4ac0-9377-f3ce77ac450c",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "17227563394beb0516": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "video_94HkbT": {
+      "type": "video",
+      "disabled": true,
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "video_url": "https:\/\/www.youtube.com\/watch?v=tfbiMs10vkk",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "accent-2",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "image_banner_VqkXGt",
+    "image_banner_jkhtkE",
+    "image_banner_kWfGhP",
+    "image_banner_tDjemq",
+    "featured-collection-0",
+    "17227563394beb0516",
+    "video_94HkbT"
+  ]
+}
