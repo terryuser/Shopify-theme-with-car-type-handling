@@ -382,8 +382,8 @@ class CarTypeSelector extends HTMLElement {
     // Get product name
     const productName = this.getProductName(productId);
     
-    // Handle add or remove action
-    if (action === 'add') {
+    // Handle different actions
+    if (action === 'add' || action === 'increase') {
       // Find product entry if it exists
       const productIndex = carTypeData.product_details.findIndex(
         item => item.product_id == productId
@@ -411,23 +411,26 @@ class CarTypeSelector extends HTMLElement {
         );
         console.log("Car type index:", carTypeIndex);
 
-        if (carTypeIndex == -1) {
+        if (carTypeIndex === -1) {
           console.log("Adding new car type to product");
           carTypeData.product_details[productIndex].car_types.push({ type: carType, quantity: quantity });
         } else {
           console.log("Car type already exists, incrementing quantity");
           // Get current car type
-          const carType = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          const carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
           
           // If it's still a string (should not happen after conversion), replace it
-          if (typeof carType === 'string') {
+          if (typeof carTypeItem === 'string') {
             carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: quantity };
           } else {
             // Otherwise increment the quantity
-            const currentQuantity = carType.quantity || 1;
+            const currentQuantity = carTypeItem.quantity || 1;
             carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = currentQuantity + quantity;
           }
         }
+        
+        // Ensure product name is updated
+        carTypeData.product_details[productIndex].product_name = productName;
       }
     } else if (action === 'remove') {
       // Find product entry
@@ -438,17 +441,70 @@ class CarTypeSelector extends HTMLElement {
       if (productIndex !== -1) {
         // Remove car type
         carTypeData.product_details[productIndex].car_types = 
-          carTypeData.product_details[productIndex].car_types.filter(item => item.type !== carType);
+          carTypeData.product_details[productIndex].car_types.filter(item => 
+            typeof item === 'string' ? item !== carType : item.type !== carType
+          );
         
         // Remove product entry if no car types left
         if (carTypeData.product_details[productIndex].car_types.length === 0) {
           carTypeData.product_details.splice(productIndex, 1);
         }
       }
+    } else if (action === 'decrease') {
+      // Find product entry
+      const productIndex = carTypeData.product_details.findIndex(
+        item => item.product_id == productId
+      );
+      
+      if (productIndex !== -1) {
+        // Find car type
+        const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
+          item => typeof item === 'string' ? item === carType : item.type === carType
+        );
+        
+        if (carTypeIndex !== -1) {
+          // Get current car type
+          const carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          
+          // If it's a string, convert it first
+          if (typeof carTypeItem === 'string') {
+            carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: 1 };
+            carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          }
+          
+          // Decrease quantity
+          const currentQuantity = carTypeItem.quantity || 1;
+          const newQuantity = Math.max(0, currentQuantity - 1);
+          
+          if (newQuantity === 0) {
+            // Remove car type if quantity is 0
+            carTypeData.product_details[productIndex].car_types = 
+              carTypeData.product_details[productIndex].car_types.filter(item => 
+                typeof item === 'string' ? item !== carType : item.type !== carType
+              );
+            
+            // Remove product entry if no car types left
+            if (carTypeData.product_details[productIndex].car_types.length === 0) {
+              carTypeData.product_details.splice(productIndex, 1);
+            }
+          } else {
+            // Update quantity
+            carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = newQuantity;
+          }
+        }
+      }
     }
     
     // Save updated data
     this.setCookie('cart_details', JSON.stringify(carTypeData), 31);
+    
+    // Refresh all car-types-display elements
+    document.querySelectorAll('car-types-display').forEach(display => {
+      if (typeof display.updateDisplay === 'function') {
+        display.updateDisplay();
+      }
+    });
+    
     return carTypeData;
   }
   

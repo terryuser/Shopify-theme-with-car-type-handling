@@ -98,8 +98,20 @@ class CarTypesDisplay extends HTMLElement {
         carTypeElement.innerHTML = `
           <span class="cart-item__car-type-name">${carTypeItem.type}</span>
           <div class="cart-item__car-type-controls">
-            <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
-            <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem.type}">×</button>
+            <div class="cart-item__car-type-quantity-controls">
+              <button class="cart-item__car-type-quantity-button cart-item__car-type-quantity-minus" 
+                      data-product-id="${product.product_id}" 
+                      data-car-type="${carTypeItem.type}" 
+                      data-action="decrease">−</button>
+              <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
+              <button class="cart-item__car-type-quantity-button cart-item__car-type-quantity-plus" 
+                      data-product-id="${product.product_id}" 
+                      data-car-type="${carTypeItem.type}" 
+                      data-action="increase">+</button>
+            </div>
+            <button class="cart-item__car-type-remove" 
+                    data-product-id="${product.product_id}" 
+                    data-car-type="${carTypeItem.type}">×</button>
           </div>
         `;
         
@@ -123,6 +135,27 @@ class CarTypesDisplay extends HTMLElement {
             // Dispatch event for other components to listen to
             document.dispatchEvent(new CustomEvent('carTypeRemoved', {
               detail: { productId, carType }
+            }));
+          }
+        });
+      });
+      
+      // Add event listeners for quantity buttons
+      this.querySelectorAll('.cart-item__car-type-quantity-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const productId = button.dataset.productId;
+          const carType = button.dataset.carType;
+          const action = button.dataset.action;
+          
+          // Find car type selector component to use its methods
+          const carTypeSelector = document.querySelector('car-type-selector');
+          if (carTypeSelector && typeof carTypeSelector.updateCarTypeCookies === 'function') {
+            carTypeSelector.updateCarTypeCookies(productId, carType, action);
+            
+            // Dispatch event for other components to listen to
+            document.dispatchEvent(new CustomEvent('carTypeUpdated', {
+              detail: { productId, carType, action }
             }));
           }
         });
