@@ -48,7 +48,7 @@ car-types-display .cart-item__car-types-heading::before {
 
 .cart-item__car-type {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   padding: 8px 0;
   font-size: 0.85rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -64,14 +64,22 @@ car-types-display .cart-item__car-types-heading::before {
 }
 
 .cart-item__car-type-name {
-  flex: 1;
+  width: 100%;
   font-weight: 500;
   color: #333;
+  padding-left: 4px;
+  margin-bottom: 4px;
+}
+
+.cart-item__car-type-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   padding-left: 4px;
 }
 
 .cart-item__car-type-quantity {
-  margin: 0 12px;
   color: #666;
   font-size: 0.8rem;
   background-color: #eee;
@@ -96,7 +104,6 @@ car-types-display .cart-item__car-types-heading::before {
   padding: 0;
   line-height: 1;
   transition: all 0.2s ease;
-  margin-left: 4px;
 }
 
 .cart-item__car-type-remove:hover {

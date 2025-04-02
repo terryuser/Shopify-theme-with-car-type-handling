@@ -80,15 +80,19 @@ class CarTypesDisplay extends HTMLElement {
         if (typeof carTypeItem === 'object' && carTypeItem.type) {
           carTypeElement.innerHTML = `
             <span class="cart-item__car-type-name">${carTypeItem.type}</span>
-            <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
-            <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem.type}">×</button>
+            <div class="cart-item__car-type-controls">
+              <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
+              <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem.type}">×</button>
+            </div>
           `;
         } else {
           // Legacy format support
           carTypeElement.innerHTML = `
             <span class="cart-item__car-type-name">${carTypeItem}</span>
-            <span class="cart-item__car-type-quantity">Qty: 1</span>
-            <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem}">×</button>
+            <div class="cart-item__car-type-controls">
+              <span class="cart-item__car-type-quantity">Qty: 1</span>
+              <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem}">×</button>
+            </div>
           `;
         }
         
