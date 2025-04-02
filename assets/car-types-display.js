@@ -71,30 +71,37 @@ class CarTypesDisplay extends HTMLElement {
       const carTypesList = document.createElement('ul');
       carTypesList.className = 'cart-item__car-types-list';
       
-      // Loop through car types
-      product.car_types.forEach(carTypeItem => {
+      // Process car types to prevent duplicates
+      const processedCarTypes = [];
+      
+      // First, convert any legacy format (strings) to objects with quantity
+      const normalizedCarTypes = product.car_types.map(item => {
+        if (typeof item === 'string') {
+          return { type: item, quantity: 1 };
+        }
+        return item;
+      });
+      
+      // Filter out duplicates while preserving the original quantities from the cookie
+      normalizedCarTypes.forEach(item => {
+        // Only add the item if it doesn't already exist in the processed list
+        if (!processedCarTypes.some(processed => processed.type === item.type)) {
+          processedCarTypes.push({...item});
+        }
+      });
+      
+      // Loop through processed car types (no duplicates)
+      processedCarTypes.forEach(carTypeItem => {
         const carTypeElement = document.createElement('li');
         carTypeElement.className = 'cart-item__car-type';
         
-        // Handle both new format (object with type and quantity) and old format (string)
-        if (typeof carTypeItem === 'object' && carTypeItem.type) {
-          carTypeElement.innerHTML = `
-            <span class="cart-item__car-type-name">${carTypeItem.type}</span>
-            <div class="cart-item__car-type-controls">
-              <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
-              <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem.type}">×</button>
-            </div>
-          `;
-        } else {
-          // Legacy format support
-          carTypeElement.innerHTML = `
-            <span class="cart-item__car-type-name">${carTypeItem}</span>
-            <div class="cart-item__car-type-controls">
-              <span class="cart-item__car-type-quantity">Qty: 1</span>
-              <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem}">×</button>
-            </div>
-          `;
-        }
+        carTypeElement.innerHTML = `
+          <span class="cart-item__car-type-name">${carTypeItem.type}</span>
+          <div class="cart-item__car-type-controls">
+            <span class="cart-item__car-type-quantity">Qty: ${carTypeItem.quantity || 1}</span>
+            <button class="cart-item__car-type-remove" data-product-id="${product.product_id}" data-car-type="${carTypeItem.type}">×</button>
+          </div>
+        `;
         
         carTypesList.appendChild(carTypeElement);
       });

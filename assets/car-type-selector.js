@@ -397,24 +397,37 @@ class CarTypeSelector extends HTMLElement {
           car_types: [{ type: carType, quantity: quantity }]
         });
       } else {
-        // Find car type if it exists
-        const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
-          item => item.type === carType
-        );
+        console.log("Updating existing product in cart details");
+        const carTypes = carTypeData.product_details[productIndex].car_types || [];
         
-        if (carTypeIndex === -1) {
-          // Add new car type
-          carTypeData.product_details[productIndex].car_types.push({ 
-            type: carType, 
-            quantity: quantity 
-          });
-        } else {
-          // Update existing car type quantity
-          carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = quantity;
+        // Convert any string-based car types to object format
+        if (carTypes.length > 0 && typeof carTypes[0] === 'string') {
+          carTypeData.product_details[productIndex].car_types = carTypes.map(type => ({ type, quantity: 1 }));
         }
         
-        // Ensure product name is updated
-        carTypeData.product_details[productIndex].product_name = productName;
+        // Find car type by name
+        const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
+          item => typeof item === 'string' ? item === carType : item.type === carType
+        );
+        console.log("Car type index:", carTypeIndex);
+
+        if (carTypeIndex == -1) {
+          console.log("Adding new car type to product");
+          carTypeData.product_details[productIndex].car_types.push({ type: carType, quantity: quantity });
+        } else {
+          console.log("Car type already exists, incrementing quantity");
+          // Get current car type
+          const carType = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          
+          // If it's still a string (should not happen after conversion), replace it
+          if (typeof carType === 'string') {
+            carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: quantity };
+          } else {
+            // Otherwise increment the quantity
+            const currentQuantity = carType.quantity || 1;
+            carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = currentQuantity + quantity;
+          }
+        }
       }
     } else if (action === 'remove') {
       // Find product entry
@@ -474,8 +487,8 @@ class CarTypeSelector extends HTMLElement {
     const quantity = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
     console.log("Product quantity:", quantity);
     
-    // Update car type cookies
-    console.log("Updating car type cookies with new structure");
+    // Update car type cookies using the modern method
+    console.log("Updating car type cookies");
     const updatedCookieData = this.updateCarTypeCookies(productId, displayName, 'add', quantity);
     console.log("Updated cookie data:", updatedCookieData);
     
@@ -483,158 +496,6 @@ class CarTypeSelector extends HTMLElement {
     document.dispatchEvent(new CustomEvent('carTypeAdded', {
       detail: { productId, carType: displayName, quantity: quantity }
     }));
-    
-    // Original cookie handling code is kept for backward compatibility
-    console.log("Starting legacy cookie handling");
-    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-    console.log("All cookies:", cookies);
-
-    const currentCartID = cookies.find((row) => row.startsWith("cart="));
-    const cartDetails = cookies.find((row) => row.startsWith("cart_details="));
-    
-    console.log("Current cart ID:", currentCartID);
-    console.log("Cart details cookie:", cartDetails);
-
-    const defaultString = "----";
-
-    const isCartExist = currentCartID;
-    const isCartDetailsExist = cartDetails;
-    console.log("Cart exists:", isCartExist);
-    console.log("Cart details exists:", isCartDetailsExist);
-
-    // ISSUE: This condition is problematic - we're creating new cart details even if they already exist
-    // This can lead to data loss if we're not careful
-    if (!isCartDetailsExist || !isCartExist) {
-      console.log("Creating new cart details cookie (no cart or details exist)");
-      //No item in cart
-      const newDetails = {
-        cart_id: currentCartID ? currentCartID.split('=')[1] : defaultString,
-        product_details: [
-          {
-            product_id: productId,
-            car_types: [displayName],
-          },
-        ],
-      };
-      
-      console.log("New cart details:", newDetails);
-
-      const expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() + 31);
-      console.log("Cookie expiration:", expireDate.toUTCString());
-
-      document.cookie = `cart_details=${JSON.stringify(
-        newDetails
-      )}; path=/; expires=${expireDate.toUTCString()}`;
-      console.log("New cart_details cookie set");
-
-      return;
-    }
-
-    console.log("Parsing existing cart details");
-    let detailsJSON;
-    try {
-      detailsJSON = JSON.parse(cartDetails.split('=')[1]);
-      console.log("Parsed cart details:", detailsJSON);
-    } catch (error) {
-      console.error("Error parsing cart details:", error);
-      // If we can't parse the existing cookie, create a new one
-      const newDetails = {
-        cart_id: currentCartID ? currentCartID.split('=')[1] : defaultString,
-        product_details: [
-          {
-            product_id: productId,
-            car_types: [displayName],
-          },
-        ],
-      };
-      
-      const expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() + 31);
-      document.cookie = `cart_details=${JSON.stringify(
-        newDetails
-      )}; path=/; expires=${expireDate.toUTCString()}`;
-      console.log("Created new cart_details cookie due to parse error");
-      return;
-    }
-
-    const recordCartID = detailsJSON.cart_id;
-    console.log("Recorded cart ID:", recordCartID);
-
-    // We should update the cart details if the cart exists
-    const currentCartIDValue = currentCartID ? currentCartID.split('=')[1] : defaultString;
-    
-    if (currentCartID) {
-      console.log("Updating existing cart details");
-      const productDetails = detailsJSON.product_details || [];
-      const productIndex = productDetails.findIndex(
-        (row) => row.product_id == productId
-      );
-      console.log("Product index in details:", productIndex);
-
-      if (productIndex == -1) {
-        console.log("Adding new product to cart details");
-        productDetails.push({
-          product_id: productId,
-          car_types: [displayName],
-        });
-      } else {
-        console.log("Updating existing product in cart details");
-        const carTypes = productDetails[productIndex].car_types || [];
-        const carIndex = carTypes.findIndex((row) => row == displayName);
-        console.log("Car type index:", carIndex);
-
-        if (carIndex == -1) {
-          console.log("Adding new car type to product");
-          carTypes.push(displayName);
-        } else {
-          console.log("Car type already exists");
-        }
-      }
-
-      // Update cart ID in the cookie
-      detailsJSON.cart_id = currentCartIDValue;
-      
-      const expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() + 31);
-      console.log("Setting updated cart details cookie");
-
-      document.cookie = `cart_details=${JSON.stringify(
-        detailsJSON
-      )}; path=/; expires=${expireDate.toUTCString()}`;
-      console.log("Cart details cookie updated");
-
-      return;
-    }
-
-    // If cart ID changed, reset the cookie
-    console.log("Checking if cart ID changed:", currentCartIDValue, "!=", recordCartID);
-                
-    if (currentCartIDValue != recordCartID) {
-      console.log("Cart ID changed, resetting cart details");
-      //Reset cookies
-      const newDetails = {
-        cart_id: currentCartIDValue,
-        product_details: [
-          {
-            product_id: productId,
-            car_types: [displayName],
-          },
-        ],
-      };
-      console.log("New cart details:", newDetails);
-
-      const expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() + 31);
-      document.cookie = `cart_details=${JSON.stringify(
-        newDetails
-      )}; path=/; expires=${expireDate.toUTCString()}`;
-      console.log("Cart details cookie reset");
-
-      return;
-    }
-    
-    console.log("No changes made to cart details cookie");
   }
 }
 
