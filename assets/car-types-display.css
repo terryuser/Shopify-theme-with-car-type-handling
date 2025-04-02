@@ -1,0 +1,257 @@
+/* Car Types Display - Modern UI/UX Styling */
+.cart-item__car-types {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.cart-item__car-types:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.cart-item__car-types-heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+}
+
+.cart-item__car-types-heading::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555555'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 6px;
+}
+
+.cart-item__car-types-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.cart-item__car-type {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background-color 0.15s ease;
+}
+
+.cart-item__car-type:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.cart-item__car-type:last-child {
+  border-bottom: none;
+}
+
+.cart-item__car-type-name {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+  padding-left: 4px;
+}
+
+.cart-item__car-type-quantity {
+  margin: 0 12px;
+  color: #666;
+  font-size: 0.8rem;
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.cart-item__car-type-remove {
+  background: none;
+  color: #888;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.2s ease;
+  margin-left: 4px;
+}
+
+.cart-item__car-type-remove:hover {
+  background: #f44336;
+  color: white;
+  border-color: #f44336;
+  transform: scale(1.05);
+}
+
+/* Animation for adding/removing car types */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-item__car-type {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cart-item__car-types {
+    padding: 8px;
+  }
+  
+  .cart-item__car-type {
+    padding: 6px 0;
+  }
+}
+
+/* Dark Theme Styles */
+@media (prefers-color-scheme: dark) {
+  .cart-item__car-types {
+    background-color: #2a2a2a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cart-item__car-types:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .cart-item__car-types-heading {
+    color: #e0e0e0;
+  }
+  
+  .cart-item__car-types-heading::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23bbbbbb'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E");
+  }
+  
+  .cart-item__car-types-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .cart-item__car-type {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .cart-item__car-type:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .cart-item__car-type-name {
+    color: #e0e0e0;
+  }
+  
+  .cart-item__car-type-quantity {
+    color: #bbb;
+    background-color: #3a3a3a;
+  }
+  
+  .cart-item__car-type-remove {
+    color: #aaa;
+    border: 1px solid #555;
+  }
+  
+  .cart-item__car-type-remove:hover {
+    background: #f44336;
+    color: #fff;
+    border-color: #f44336;
+  }
+}
+
+/* Support for dark theme class-based approach */
+.theme-dark .cart-item__car-types,
+[data-theme="dark"] .cart-item__car-types,
+.dark-mode .cart-item__car-types,
+.dark .cart-item__car-types {
+  background-color: #2a2a2a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .cart-item__car-types:hover,
+[data-theme="dark"] .cart-item__car-types:hover,
+.dark-mode .cart-item__car-types:hover,
+.dark .cart-item__car-types:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .cart-item__car-types-heading,
+[data-theme="dark"] .cart-item__car-types-heading,
+.dark-mode .cart-item__car-types-heading,
+.dark .cart-item__car-types-heading {
+  color: #e0e0e0;
+}
+
+.theme-dark .cart-item__car-types-heading::before,
+[data-theme="dark"] .cart-item__car-types-heading::before,
+.dark-mode .cart-item__car-types-heading::before,
+.dark .cart-item__car-types-heading::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23bbbbbb'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E");
+}
+
+.theme-dark .cart-item__car-types-list,
+[data-theme="dark"] .cart-item__car-types-list,
+.dark-mode .cart-item__car-types-list,
+.dark .cart-item__car-types-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .cart-item__car-type,
+[data-theme="dark"] .cart-item__car-type,
+.dark-mode .cart-item__car-type,
+.dark .cart-item__car-type {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .cart-item__car-type:hover,
+[data-theme="dark"] .cart-item__car-type:hover,
+.dark-mode .cart-item__car-type:hover,
+.dark .cart-item__car-type:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .cart-item__car-type-name,
+[data-theme="dark"] .cart-item__car-type-name,
+.dark-mode .cart-item__car-type-name,
+.dark .cart-item__car-type-name {
+  color: #e0e0e0;
+}
+
+.theme-dark .cart-item__car-type-quantity,
+[data-theme="dark"] .cart-item__car-type-quantity,
+.dark-mode .cart-item__car-type-quantity,
+.dark .cart-item__car-type-quantity {
+  color: #bbb;
+  background-color: #3a3a3a;
+}
+
+.theme-dark .cart-item__car-type-remove,
+[data-theme="dark"] .cart-item__car-type-remove,
+.dark-mode .cart-item__car-type-remove,
+.dark .cart-item__car-type-remove {
+  color: #aaa;
+  border: 1px solid #555;
+}
+
+.theme-dark .cart-item__car-type-remove:hover,
+[data-theme="dark"] .cart-item__car-type-remove:hover,
+.dark-mode .cart-item__car-type-remove:hover,
+.dark .cart-item__car-type-remove:hover {
+  background: #f44336;
+  color: #fff;
+  border-color: #f44336;
+}
