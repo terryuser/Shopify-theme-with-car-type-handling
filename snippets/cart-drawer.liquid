@@ -216,7 +216,7 @@
 
                           <!-- Car Types Display for this product -->
                           <div class="cart-item__car-types" data-product-id="{{ item.product.id }}">
-                            <!-- Car types will be populated by JavaScript -->
+                          {% render 'car-types-display' %}
                           </div>
 
                           <ul
@@ -473,5 +473,3 @@
     });
   });
 </script>
-
-{% render 'car-types-display' %}

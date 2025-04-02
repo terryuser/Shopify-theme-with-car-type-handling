@@ -3,7 +3,11 @@
   Usage: Include this snippet in the cart-drawer.liquid file
 {% endcomment %}
 
-<car-types-display></car-types-display>
+
+<car-types-display>
+    <!-- Car Types Display content will be dynamically generated -->
+</car-types-display>
+
 
 {{ 'car-types-display.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'car-types-display.js' | asset_url }}" defer="defer"></script>

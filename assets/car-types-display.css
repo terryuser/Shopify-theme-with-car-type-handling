@@ -1,6 +1,12 @@
 /* Car Types Display - Modern UI/UX Styling */
-.cart-item__car-types {
+/* Styles for both the container and the custom element */
+.cart-item__car-types,
+car-types-display {
+  display: block;
   margin-top: 12px;
+}
+
+car-types-display {
   padding: 10px;
   background-color: #f9f9f9;
   border-radius: 6px;
@@ -8,7 +14,7 @@
   transition: all 0.2s ease;
 }
 
-.cart-item__car-types:hover {
+car-types-display:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
@@ -22,7 +28,7 @@
   letter-spacing: 0.02em;
 }
 
-.cart-item__car-types-heading::before {
+car-types-display .cart-item__car-types-heading::before {
   content: '';
   display: inline-block;
   width: 14px;
@@ -112,7 +118,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .cart-item__car-types {
+  car-types-display {
     padding: 8px;
   }
   
@@ -123,12 +129,12 @@
 
 /* Dark Theme Styles */
 @media (prefers-color-scheme: dark) {
-  .cart-item__car-types {
+  car-types-display {
     background-color: #2a2a2a;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
   
-  .cart-item__car-types:hover {
+  car-types-display:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
   
@@ -174,18 +180,18 @@
 }
 
 /* Support for dark theme class-based approach */
-.theme-dark .cart-item__car-types,
-[data-theme="dark"] .cart-item__car-types,
-.dark-mode .cart-item__car-types,
-.dark .cart-item__car-types {
+.theme-dark car-types-display,
+[data-theme="dark"] car-types-display,
+.dark-mode car-types-display,
+.dark car-types-display {
   background-color: #2a2a2a;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.theme-dark .cart-item__car-types:hover,
-[data-theme="dark"] .cart-item__car-types:hover,
-.dark-mode .cart-item__car-types:hover,
-.dark .cart-item__car-types:hover {
+.theme-dark car-types-display:hover,
+[data-theme="dark"] car-types-display:hover,
+.dark-mode car-types-display:hover,
+.dark car-types-display:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
