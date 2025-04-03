@@ -124,7 +124,7 @@
 
                   <tbody role="rowgroup">
                     {%- for item in cart.items -%}
-                      <tr id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cart-item" role="row" data-product-id="{{ item.product_id }}">
+                      <tr id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cart-item" role="row" data-product-id="{{ item.product_id }}" data-index="{{ item.index | plus: 1 }}">
                         <td class="cart-item__media" role="cell" headers="CartDrawer-ColumnProductImage">
                           {% if item.image %}
                             {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -215,7 +215,7 @@
                           {%- endif -%}
 
                           <!-- Car Types Display for this product -->
-                          <div class="cart-item__car-types" data-product-id="{{ item.product.id }}">
+                          <div class="cart-item__car-types" data-product-id="{{ item.product.id }}" data-index="{{ item.index | plus: 1 }}">
                           {% render 'car-types-display' %}
                           </div>
 

@@ -77,54 +77,72 @@ car-types-display .cart-item__car-types-heading::before {
   align-items: center;
   width: 100%;
   padding-left: 4px;
+  margin-top: 8px;
 }
 
-.cart-item__car-type-quantity-controls {
+.cart-item__car-type-quantity-wrapper {
   display: flex;
   align-items: center;
-  gap: 4px;
 }
 
-.cart-item__car-type-quantity {
-  color: #666;
-  font-size: 0.8rem;
-  background-color: #eee;
-  padding: 2px 6px;
-  border-radius: 12px;
-  min-width: 60px;
-  text-align: center;
-}
-
-.cart-item__car-type-quantity-button {
-  background: none;
-  color: #666;
+.car-type-quantity-input.quantity {
+  display: flex;
+  border-radius: 4px;
   border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: auto;
+  min-width: 110px;
+  height: 32px;
+  overflow: visible;
+}
+
+.cart-item__car-type-quantity-input {
+  color: currentColor;
+  font-size: 0.85rem;
+  text-align: center;
+  width: 40px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.cart-item__car-type-quantity-input::-webkit-outer-spin-button,
+.cart-item__car-type-quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cart-item__car-type-quantity-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.car-type-quantity-input .quantity__button {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: none;
+  color: #666;
   cursor: pointer;
-  font-size: 14px;
   padding: 0;
-  line-height: 1;
   transition: all 0.2s ease;
 }
 
-.cart-item__car-type-quantity-button:hover {
+.car-type-quantity-input .quantity__button:hover {
+  color: #000;
   background-color: #f5f5f5;
-  border-color: #ccc;
 }
 
-.cart-item__car-type-quantity-minus:hover {
-  color: #f44336;
-  border-color: #f44336;
-}
-
-.cart-item__car-type-quantity-plus:hover {
-  color: #4CAF50;
-  border-color: #4CAF50;
+.car-type-quantity-input .icon {
+  width: 10px;
+  height: 10px;
 }
 
 .cart-item__car-type-remove {
@@ -132,16 +150,17 @@ car-types-display .cart-item__car-types-heading::before {
   color: #888;
   border: 1px solid #ddd;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   padding: 0;
   line-height: 1;
   transition: all 0.2s ease;
+  margin-left: 8px;
 }
 
 .cart-item__car-type-remove:hover {
@@ -357,4 +376,34 @@ car-types-display .cart-item__car-types-heading::before {
   background: #f44336;
   color: #fff;
   border-color: #f44336;
+}
+
+.theme-dark .car-type-quantity-input.quantity,
+[data-theme="dark"] .car-type-quantity-input.quantity,
+.dark-mode .car-type-quantity-input.quantity,
+.dark .car-type-quantity-input.quantity {
+  border-color: #444;
+  background-color: #333;
+}
+
+.theme-dark .cart-item__car-type-quantity-input,
+[data-theme="dark"] .cart-item__car-type-quantity-input,
+.dark-mode .cart-item__car-type-quantity-input,
+.dark .cart-item__car-type-quantity-input {
+  color: #eee;
+}
+
+.theme-dark .car-type-quantity-input .quantity__button,
+[data-theme="dark"] .car-type-quantity-input .quantity__button,
+.dark-mode .car-type-quantity-input .quantity__button,
+.dark .car-type-quantity-input .quantity__button {
+  color: #aaa;
+}
+
+.theme-dark .car-type-quantity-input .quantity__button:hover,
+[data-theme="dark"] .car-type-quantity-input .quantity__button:hover,
+.dark-mode .car-type-quantity-input .quantity__button:hover,
+.dark .car-type-quantity-input .quantity__button:hover {
+  color: #fff;
+  background-color: #444;
 }

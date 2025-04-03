@@ -43,6 +43,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
+    console.log('[CLIENT] Quantity changed:',event.target.dataset, event.target.value);
     this.updateQuantity(event.target.dataset.index, event.target.value, document.activeElement.getAttribute('name'));
   }
 
@@ -85,6 +86,8 @@ class CartItems extends HTMLElement {
   }
 
   updateQuantity(line, quantity, name) {
+    console.log('[CLIENT][updateQuantity] Updating quantity:', line, quantity, name);
+ 
     this.enableLoading(line);
 
     const body = JSON.stringify({
@@ -104,7 +107,10 @@ class CartItems extends HTMLElement {
           document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
         const items = document.querySelectorAll('.cart-item');
 
+        console.log('[CLIENT][updateQuantity] Quantity element:', quantityElement);
+        console.log('[CLIENT][updateQuantity] Items:', items);
         if (parsedState.errors) {
+          console.log('[CLIENT][updateQuantity] Errors:', parsedState.errors);
           quantityElement.value = quantityElement.getAttribute('value');
           this.updateLiveRegions(line, parsedState.errors);
           return;
@@ -125,12 +131,17 @@ class CartItems extends HTMLElement {
             section.selector
           );
         });
+        console.log('[CLIENT][updateQuantity] Parsed state:', parsedState);
         const updatedValue = parsedState.items[line - 1] ? parsedState.items[line - 1].quantity : undefined;
         let message = '';
+        console.log('[CLIENT][updateQuantity] Result of if condition:', items.length, parsedState.items.length, updatedValue, quantityElement.value, line);
         if (items.length === parsedState.items.length && updatedValue !== parseInt(quantityElement.value)) {
+          console.log('[CLIENT][updateQuantity] Quantity mismatch:', updatedValue, quantityElement.value, line);
           if (typeof updatedValue === 'undefined') {
+            console.log('[CLIENT][updateQuantity] Quantity undefined');
             message = window.cartStrings.error;
           } else {
+            console.log('[CLIENT][updateQuantity] Quantity mismatched');
             message = window.cartStrings.quantityError.replace('[quantity]', updatedValue);
           }
         }
@@ -150,6 +161,7 @@ class CartItems extends HTMLElement {
         publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items' });
       })
       .catch(() => {
+        console.error('Error updating quantity', line, quantity, name);
         this.querySelectorAll('.loading-overlay').forEach((overlay) => overlay.classList.add('hidden'));
         const errors = document.getElementById('cart-errors') || document.getElementById('CartDrawer-CartErrors');
         errors.textContent = window.cartStrings.error;
@@ -164,6 +176,7 @@ class CartItems extends HTMLElement {
       document.getElementById(`Line-item-error-${line}`) || document.getElementById(`CartDrawer-LineItemError-${line}`);
     if (lineItemError) lineItemError.querySelector('.cart-item__error-text').innerHTML = message;
 
+    console.log('Updating live regions', line, message);
     this.lineItemStatusElement.setAttribute('aria-hidden', true);
 
     const cartStatus =

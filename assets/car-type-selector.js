@@ -347,8 +347,11 @@ class CarTypeSelector extends HTMLElement {
 
   // Helper function to update car type cookies
   updateCarTypeCookies(productId, carType, action = 'add', quantity = 1) {
+    console.log('[TRACE] updateCarTypeCookies called with:', { productId, carType, action, quantity });
+    
     // Get current cart ID
     const cartId = this.getCookie('cart') || '';
+    console.log('[DATA] Current cart ID:', cartId);
     
     // Get existing car type data
     let carTypeData = {
@@ -356,10 +359,13 @@ class CarTypeSelector extends HTMLElement {
       product_details: []
     };
     const carTypeCookie = this.getCookie('cart_details');
+    console.log('[DATA] Current cart_details cookie:', carTypeCookie ? 'exists' : 'not found');
     
     if (carTypeCookie) {
       try {
         carTypeData = JSON.parse(carTypeCookie);
+        console.log('[DATA] Parsed cart details:', JSON.stringify(carTypeData, null, 2));
+        
         // Ensure the structure is correct
         if (!carTypeData.cart_id) carTypeData.cart_id = cartId;
         if (!Array.isArray(carTypeData.product_details)) carTypeData.product_details = [];
@@ -367,11 +373,12 @@ class CarTypeSelector extends HTMLElement {
         // Migrate old format if needed (where car_types were strings instead of objects)
         carTypeData.product_details.forEach(product => {
           if (Array.isArray(product.car_types) && product.car_types.length > 0 && typeof product.car_types[0] === 'string') {
+            console.log('[MIGRATION] Converting string car types to objects for product:', product.product_id);
             product.car_types = product.car_types.map(type => ({ type, quantity: 1 }));
           }
         });
       } catch (e) {
-        console.error('Error parsing car type cookie:', e);
+        console.error('[ERROR] Error parsing car type cookie:', e);
         carTypeData = {
           cart_id: cartId,
           product_details: []
@@ -381,15 +388,19 @@ class CarTypeSelector extends HTMLElement {
     
     // Get product name
     const productName = this.getProductName(productId);
+    console.log('[DATA] Product name:', productName);
     
     // Handle different actions
     if (action === 'add' || action === 'increase') {
+      console.log('[ACTION] Processing add/increase action');
       // Find product entry if it exists
       const productIndex = carTypeData.product_details.findIndex(
         item => item.product_id == productId
       );
+      console.log('[DATA] Product index in cart details:', productIndex);
       
       if (productIndex === -1) {
+        console.log('[ACTION] Adding new product entry with car type');
         // Add new product entry
         carTypeData.product_details.push({
           product_id: productId,
@@ -397,11 +408,12 @@ class CarTypeSelector extends HTMLElement {
           car_types: [{ type: carType, quantity: quantity }]
         });
       } else {
-        console.log("Updating existing product in cart details");
+        console.log('[ACTION] Updating existing product in cart details');
         const carTypes = carTypeData.product_details[productIndex].car_types || [];
         
         // Convert any string-based car types to object format
         if (carTypes.length > 0 && typeof carTypes[0] === 'string') {
+          console.log('[MIGRATION] Converting string car types to objects');
           carTypeData.product_details[productIndex].car_types = carTypes.map(type => ({ type, quantity: 1 }));
         }
         
@@ -409,23 +421,26 @@ class CarTypeSelector extends HTMLElement {
         const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
           item => typeof item === 'string' ? item === carType : item.type === carType
         );
-        console.log("Car type index:", carTypeIndex);
+        console.log('[DATA] Car type index:', carTypeIndex);
 
         if (carTypeIndex === -1) {
-          console.log("Adding new car type to product");
+          console.log('[ACTION] Adding new car type to product');
           carTypeData.product_details[productIndex].car_types.push({ type: carType, quantity: quantity });
         } else {
-          console.log("Car type already exists, incrementing quantity");
+          console.log('[ACTION] Car type already exists, incrementing quantity');
           // Get current car type
           const carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
           
           // If it's still a string (should not happen after conversion), replace it
           if (typeof carTypeItem === 'string') {
+            console.log('[MIGRATION] Converting string car type to object during update');
             carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: quantity };
           } else {
             // Otherwise increment the quantity
             const currentQuantity = carTypeItem.quantity || 1;
-            carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = currentQuantity + quantity;
+            const newQuantity = currentQuantity + quantity;
+            console.log('[DATA] Updating quantity from', currentQuantity, 'to', newQuantity);
+            carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = newQuantity;
           }
         }
         
@@ -433,12 +448,15 @@ class CarTypeSelector extends HTMLElement {
         carTypeData.product_details[productIndex].product_name = productName;
       }
     } else if (action === 'remove') {
+      console.log('[ACTION] Processing remove action');
       // Find product entry
       const productIndex = carTypeData.product_details.findIndex(
         item => item.product_id == productId
       );
+      console.log('[DATA] Product index in cart details:', productIndex);
       
       if (productIndex !== -1) {
+        console.log('[ACTION] Removing car type from product');
         // Remove car type
         carTypeData.product_details[productIndex].car_types = 
           carTypeData.product_details[productIndex].car_types.filter(item => 
@@ -447,20 +465,24 @@ class CarTypeSelector extends HTMLElement {
         
         // Remove product entry if no car types left
         if (carTypeData.product_details[productIndex].car_types.length === 0) {
+          console.log('[ACTION] No car types left, removing product entry');
           carTypeData.product_details.splice(productIndex, 1);
         }
       }
     } else if (action === 'decrease') {
+      console.log('[ACTION] Processing decrease action');
       // Find product entry
       const productIndex = carTypeData.product_details.findIndex(
         item => item.product_id == productId
       );
+      console.log('[DATA] Product index in cart details:', productIndex);
       
       if (productIndex !== -1) {
         // Find car type
         const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
           item => typeof item === 'string' ? item === carType : item.type === carType
         );
+        console.log('[DATA] Car type index:', carTypeIndex);
         
         if (carTypeIndex !== -1) {
           // Get current car type
@@ -468,6 +490,7 @@ class CarTypeSelector extends HTMLElement {
           
           // If it's a string, convert it first
           if (typeof carTypeItem === 'string') {
+            console.log('[MIGRATION] Converting string car type to object during decrease');
             carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: 1 };
             carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
           }
@@ -475,8 +498,10 @@ class CarTypeSelector extends HTMLElement {
           // Decrease quantity
           const currentQuantity = carTypeItem.quantity || 1;
           const newQuantity = Math.max(0, currentQuantity - 1);
+          console.log('[DATA] Decreasing quantity from', currentQuantity, 'to', newQuantity);
           
           if (newQuantity === 0) {
+            console.log('[ACTION] Quantity is zero, removing car type');
             // Remove car type if quantity is 0
             carTypeData.product_details[productIndex].car_types = 
               carTypeData.product_details[productIndex].car_types.filter(item => 
@@ -485,6 +510,7 @@ class CarTypeSelector extends HTMLElement {
             
             // Remove product entry if no car types left
             if (carTypeData.product_details[productIndex].car_types.length === 0) {
+              console.log('[ACTION] No car types left, removing product entry');
               carTypeData.product_details.splice(productIndex, 1);
             }
           } else {
@@ -493,12 +519,79 @@ class CarTypeSelector extends HTMLElement {
           }
         }
       }
+    } else if (action === 'setQuantity') {
+      console.log('[ACTION] Processing setQuantity action with quantity:', quantity);
+      // Find product entry
+      const productIndex = carTypeData.product_details.findIndex(
+        item => item.product_id == productId
+      );
+      console.log('[DATA] Product index in cart details:', productIndex);
+      
+      if (productIndex !== -1) {
+        // Find car type
+        const carTypeIndex = carTypeData.product_details[productIndex].car_types.findIndex(
+          item => typeof item === 'string' ? item === carType : item.type === carType
+        );
+        console.log('[DATA] Car type index:', carTypeIndex);
+        
+        if (carTypeIndex !== -1) {
+          // Get current car type
+          let carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          
+          // If it's a string, convert it first
+          if (typeof carTypeItem === 'string') {
+            console.log('[MIGRATION] Converting string car type to object during setQuantity');
+            carTypeData.product_details[productIndex].car_types[carTypeIndex] = { type: carType, quantity: 1 };
+            carTypeItem = carTypeData.product_details[productIndex].car_types[carTypeIndex];
+          }
+          
+          // Set the new quantity
+          if (quantity <= 0) {
+            console.log('[ACTION] Quantity is zero or negative, removing car type');
+            // Remove car type if quantity is 0
+            carTypeData.product_details[productIndex].car_types = 
+              carTypeData.product_details[productIndex].car_types.filter(item => 
+                typeof item === 'string' ? item !== carType : item.type !== carType
+              );
+            
+            // Remove product entry if no car types left
+            if (carTypeData.product_details[productIndex].car_types.length === 0) {
+              console.log('[ACTION] No car types left, removing product entry');
+              carTypeData.product_details.splice(productIndex, 1);
+            }
+          } else {
+            // Update quantity
+            console.log('[DATA] Setting quantity to', quantity);
+            carTypeData.product_details[productIndex].car_types[carTypeIndex].quantity = quantity;
+          }
+        } else if (quantity > 0) {
+          console.log('[ACTION] Car type not found but quantity > 0, adding new car type');
+          // Add new car type if it doesn't exist and quantity is greater than 0
+          carTypeData.product_details[productIndex].car_types.push({ 
+            type: carType, 
+            quantity: quantity 
+          });
+        }
+        
+        // Ensure product name is updated
+        carTypeData.product_details[productIndex].product_name = productName;
+      } else if (quantity > 0) {
+        console.log('[ACTION] Product not found but quantity > 0, adding new product with car type');
+        // Add new product entry if it doesn't exist and quantity is greater than 0
+        carTypeData.product_details.push({
+          product_id: productId,
+          product_name: productName,
+          car_types: [{ type: carType, quantity: quantity }]
+        });
+      }
     }
     
     // Save updated data
+    console.log('[ACTION] Saving updated cart details cookie:', JSON.stringify(carTypeData, null, 2));
     this.setCookie('cart_details', JSON.stringify(carTypeData), 31);
     
     // Refresh all car-types-display elements
+    console.log('[ACTION] Refreshing all car-types-display elements');
     document.querySelectorAll('car-types-display').forEach(display => {
       if (typeof display.updateDisplay === 'function') {
         display.updateDisplay();
