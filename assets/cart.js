@@ -131,7 +131,6 @@ class CartItems extends HTMLElement {
             section.selector
           );
         });
-        console.log('[CLIENT][updateQuantity] Parsed state:', parsedState);
         const updatedValue = parsedState.items[line - 1] ? parsedState.items[line - 1].quantity : undefined;
         let message = '';
         console.log('[CLIENT][updateQuantity] Result of if condition:', items.length, parsedState.items.length, updatedValue, quantityElement.value, line);
