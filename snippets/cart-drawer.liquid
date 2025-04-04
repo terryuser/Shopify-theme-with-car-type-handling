@@ -214,10 +214,7 @@
                             <p class="product-option">{{ item.selling_plan_allocation.selling_plan.name }}</p>
                           {%- endif -%}
 
-                          <!-- Car Types Display for this product -->
-                          <div class="cart-item__car-types" data-product-id="{{ item.product.id }}" data-index="{{ item.index | plus: 1 }}">
-                          {% render 'car-types-display' %}
-                          </div>
+                          
 
                           <ul
                             class="discounts list-unstyled"
@@ -286,7 +283,10 @@
                             {%- endif -%}
                           </div>
                         </td>
-
+                        <!-- Car Types Display for this product -->
+                        <td class="cart-item__car-types" data-product-id="{{ item.product.id }}" data-index="{{ item.index | plus: 1 }}">
+                          {% render 'car-types-display' %}
+                        </td>
                         <td class="cart-item__quantity" role="cell" headers="CartDrawer-ColumnQuantity">
                           <div class="cart-item__quantity-wrapper">
                             <quantity-input class="quantity cart-quantity">

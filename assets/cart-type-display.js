@@ -8,24 +8,64 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('cart:refresh', function(event) {
     console.log("Cart refresh event detected");
     updateCartVehicleDisplay();
+    
+    // Directly call updateDisplay() on all car-types-display elements
+    setTimeout(() => {
+      console.log("Directly calling updateDisplay() from cart:refresh event");
+      document.querySelectorAll('car-types-display').forEach(display => {
+        if (display && typeof display.updateDisplay === 'function') {
+          display.updateDisplay();
+        }
+      });
+    }, 100);
   });
   
   // Listen for Shopify's cart:added event which is triggered when an item is added to the cart
   document.addEventListener('cart:added', function(event) {
     console.log("Cart added event detected");
     updateCartVehicleDisplay();
+    
+    // Directly call updateDisplay() on all car-types-display elements
+    setTimeout(() => {
+      console.log("Directly calling updateDisplay() from cart:added event");
+      document.querySelectorAll('car-types-display').forEach(display => {
+        if (display && typeof display.updateDisplay === 'function') {
+          display.updateDisplay();
+        }
+      });
+    }, 100);
   });
   
   // Listen for Shopify's drawer open event
   document.addEventListener('drawerOpen', function(event) {
     console.log("Drawer open event detected");
     updateCartVehicleDisplay();
+    
+    // Directly call updateDisplay() on all car-types-display elements
+    setTimeout(() => {
+      console.log("Directly calling updateDisplay() from drawerOpen event");
+      document.querySelectorAll('car-types-display').forEach(display => {
+        if (display && typeof display.updateDisplay === 'function') {
+          display.updateDisplay();
+        }
+      });
+    }, 100);
   });
   
   // Listen for our custom event from car-type-selector.js
   document.addEventListener('carTypeAdded', function(event) {
     console.log("Car type added event detected", event.detail);
     updateCartVehicleDisplay();
+    
+    // Directly call updateDisplay() on all car-types-display elements
+    setTimeout(() => {
+      console.log("Directly calling updateDisplay() from carTypeAdded event");
+      document.querySelectorAll('car-types-display').forEach(display => {
+        if (display && typeof display.updateDisplay === 'function') {
+          display.updateDisplay();
+        }
+      });
+    }, 100);
   });
   
   // Create a MutationObserver to watch for cart drawer changes
@@ -83,6 +123,15 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log("No product data found for product ID:", productId);
           container.innerHTML = ''; // Clear container if no data found
         }
+      }
+    });
+
+    // Directly call updateDisplay() on all car-types-display elements
+    console.log("Directly calling updateDisplay() on all car-types-display elements");
+    document.querySelectorAll('car-types-display').forEach(display => {
+      console.log("Calling updateDisplay() on", display);
+      if (display && typeof display.updateDisplay === 'function') {
+        display.updateDisplay();
       }
     });
   }

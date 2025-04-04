@@ -345,12 +345,67 @@ class CarTypeSelector extends HTMLElement {
     document.cookie = `${name}=${value}; ${expires}; path=/`;
   }
 
+  // Generate a unique temporary cart ID
+  getNewCartId() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.getCookie('cart'));
+      }, 1000);
+    });
+  }
+
   // Helper function to update car type cookies
-  updateCarTypeCookies(productId, carType, action = 'add', quantity = 1) {
+  async updateCarTypeCookies(productId, carType, action = 'add', quantity = 1) {
     console.log('[TRACE] updateCarTypeCookies called with:', { productId, carType, action, quantity });
     
     // Get current cart ID
-    const cartId = this.getCookie('cart') || '';
+    let cartId = this.getCookie('cart');
+    
+    // Handle case when cart is missing
+    if (!cartId) {
+      console.log('[CART] No cart ID found, attempting to get new cart ID');
+      try {
+        cartId = await this.getNewCartId();
+        console.log('[CART] Retrieved cart ID:', cartId);
+        
+        // If we still don't have a cart ID, create a fallback ID
+        if (!cartId) {
+          const timestamp = new Date().getTime();
+          const random = Math.floor(Math.random() * 1000000);
+          cartId = `temp_${timestamp}_${random}`;
+          console.log('[CART] Created fallback cart ID:', cartId);
+        }
+        
+        // Set the cart ID cookie
+        this.setCookie('cart', cartId, 31);
+        
+        // Create a new cart_details cookie with the cart ID
+        const newCartDetails = JSON.stringify({
+          cart_id: cartId,
+          product_details: []
+        });
+        this.setCookie('cart_details', newCartDetails, 31);
+        console.log('[CART] Created new cart_details cookie with cart ID');
+      } catch (error) {
+        console.error('[ERROR] Failed to get new cart ID:', error);
+        // Create a fallback cart ID
+        const timestamp = new Date().getTime();
+        const random = Math.floor(Math.random() * 1000000);
+        cartId = `temp_${timestamp}_${random}`;
+        console.log('[CART] Created fallback cart ID after error:', cartId);
+        
+        // Set the fallback cart ID cookie
+        this.setCookie('cart', cartId, 31);
+        
+        // Create a new cart_details cookie with the fallback cart ID
+        const newCartDetails = JSON.stringify({
+          cart_id: cartId,
+          product_details: []
+        });
+        this.setCookie('cart_details', newCartDetails, 31);
+      }
+    }
+    
     console.log('[DATA] Current cart ID:', cartId);
     
     // Get existing car type data
@@ -367,7 +422,10 @@ class CarTypeSelector extends HTMLElement {
         console.log('[DATA] Parsed cart details:', JSON.stringify(carTypeData, null, 2));
         
         // Ensure the structure is correct
-        if (!carTypeData.cart_id) carTypeData.cart_id = cartId;
+        if (!carTypeData.cart_id || carTypeData.cart_id !== cartId) {
+          console.log('[CART] Updating cart_id in car_details from', carTypeData.cart_id, 'to', cartId);
+          carTypeData.cart_id = cartId;
+        }
         if (!Array.isArray(carTypeData.product_details)) carTypeData.product_details = [];
         
         // Migrate old format if needed (where car_types were strings instead of objects)
@@ -632,19 +690,28 @@ class CarTypeSelector extends HTMLElement {
     const displayName = selectedMade + " " + selectedModel + " " + selectedYear;
     
     // Get quantity if available (default to 1)
-    const quantityInput = document.querySelector('input[name="quantity"]');
-    const quantity = quantityInput ? parseInt(quantityInput.value, 10) || 1 : 1;
+    const quantityInput = document.querySelector('input[name="quantity"][data-product-id="' + productId + '"]');
+    const quantity = quantityInput ? parseInt(quantityInput.value, 10) : 1;
     console.log("Product quantity:", quantity);
     
     // Update car type cookies using the modern method
     console.log("Updating car type cookies");
-    const updatedCookieData = this.updateCarTypeCookies(productId, displayName, 'add', quantity);
-    console.log("Updated cookie data:", updatedCookieData);
-    
-    // Trigger custom event for cart-type-display.js
-    document.dispatchEvent(new CustomEvent('carTypeAdded', {
-      detail: { productId, carType: displayName, quantity: quantity }
-    }));
+    this.updateCarTypeCookies(productId, displayName, 'add', quantity)
+      .then(updatedCookieData => {
+        console.log("Updated cookie data:", updatedCookieData);
+        
+        // Trigger custom event for cart-type-display.js
+        document.dispatchEvent(new CustomEvent('carTypeAdded', {
+          detail: { productId, carType: displayName, quantity: quantity }
+        }));
+      })
+      .catch(error => {
+        console.error("Error updating car type cookies:", error);
+        // Still dispatch the event so UI can be updated
+        document.dispatchEvent(new CustomEvent('carTypeAdded', {
+          detail: { productId, carType: displayName, quantity: quantity }
+        }));
+      });
   }
 }
 

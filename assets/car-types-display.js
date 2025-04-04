@@ -8,13 +8,11 @@ class CarTypesDisplay extends HTMLElement {
 
   connectedCallback() {
     // Initialize the display when the element is added to the DOM
-    this.initializeDisplay();
+    setTimeout(() => this.initializeDisplay(), 100);
     
-    // Listen for cart type updates
-    document.addEventListener('carTypeUpdated', () => this.updateDisplay());
-    document.addEventListener('carTypeAdded', () => this.updateDisplay());
+    // Listen for direct events not handled by cart-type-display.js
     document.addEventListener('carTypeRemoved', () => this.updateDisplay());
-    document.addEventListener('cart:refresh', () => this.updateDisplay());
+    document.addEventListener('carTypeUpdated', () => this.updateDisplay());
   }
   
   initializeDisplay() {
@@ -22,6 +20,7 @@ class CarTypesDisplay extends HTMLElement {
   }
   
   updateDisplay() {
+    console.log('[INFO] Updating car types display');
     try {
       // Clear existing content
       this.innerHTML = '';
@@ -44,13 +43,36 @@ class CarTypesDisplay extends HTMLElement {
       
       console.log('[INFO] Displaying car types for product ID:', productId);
       
-      // Get cart details cookie
-      const cartDetailsCookie = this.getCookie('cart_details');
-      if (!cartDetailsCookie) {
-        console.log('[INFO] No cart_details cookie found');
+      // Check if we need to delay (only on first check and when cart cookie is empty)
+      const cartCookie = this.getCookie('cart');
+      console.log('[INFO] Cart cookie on updateDisplay():', cartCookie);
+      if (!cartCookie) {
+        console.log('[INFO] Cart cookie is empty, waiting 1 second before checking for cart_details cookie');
+        setTimeout(() => {
+          this.updateDisplay();
+        }, 1000);
         return;
       }
       
+      // Get cart details cookie after delay
+      const cartDetailsCookie = this.getCookie('cart_details');
+      if (!cartDetailsCookie) {
+        console.log('[INFO] No cart_details cookie found after delay');
+        
+        // Show a simple message when no car types are available
+        const heading = document.createElement('div');
+        heading.className = 'cart-item__car-types-heading';
+        heading.textContent = 'Car Types for the product:';
+        this.appendChild(heading);
+        
+        const noTypesElement = document.createElement('div');
+        noTypesElement.className = 'cart-item__car-types-empty';
+        noTypesElement.textContent = 'No car types selected yet';
+        this.appendChild(noTypesElement);
+        return;
+      }
+      
+      // Parse the cart details
       const cartDetails = JSON.parse(cartDetailsCookie);
       
       if (!cartDetails.product_details || cartDetails.product_details.length === 0) {
@@ -68,7 +90,7 @@ class CarTypesDisplay extends HTMLElement {
       // Create heading
       const heading = document.createElement('div');
       heading.className = 'cart-item__car-types-heading';
-      heading.textContent = 'Selected Car Types:';
+      heading.textContent = 'Car Types for the product:';
       this.appendChild(heading);
       
       // Create a list element for the car types
@@ -100,56 +122,60 @@ class CarTypesDisplay extends HTMLElement {
         carTypeElement.innerHTML = `
           <div class="cart-item__car-type-info">
             <span class="cart-item__car-type-name">${carTypeItem.type}</span>
-            <div class="cart-item__car-type-quantity">
-              <quantity-controls class="quantity cart-item__car-type-quantity-wrapper">
-                <button 
-                  class="quantity__button no-js-hidden" 
-                  name="minus" 
-                  type="button"
-                  data-action="decrease"
-                  data-product-id="${productId}"
-                  data-car-type="${carTypeItem.type}"
-                >
-                  <span class="visually-hidden">Decrease quantity for ${carTypeItem.type}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-minus" fill="none" viewBox="0 0 10 2">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M.5 1C.5.7.7.5 1 .5h8a.5.5 0 110 1H1A.5.5 0 01.5 1z" fill="currentColor">
-                    </path>
-                  </svg>
-                </button>
-                <input 
-                  class="quantity__input cart-item__car-type-quantity-input" 
-                  type="number" 
-                  name="quantity" 
-                  id="Quantity-${productId}-${carTypeItem.type.replace(/\s+/g, '-')}" 
-                  min="1" 
-                  value="${carTypeItem.quantity || 1}" 
-                  data-product-id="${productId}"
-                  data-car-type="${carTypeItem.type}"
-                >
-                <button 
-                  class="quantity__button no-js-hidden" 
-                  name="plus" 
-                  type="button"
-                  data-action="increase"
-                  data-product-id="${productId}"
-                  data-car-type="${carTypeItem.type}"
-                >
-                  <span class="visually-hidden">Increase quantity for ${carTypeItem.type}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-plus" fill="none" viewBox="0 0 10 10">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.51a.5.5 0 000 1h3.5l.01 3.5a.5.5 0 001-.01V5.5l3.5-.01a.5.5 0 00-.01-1H5.5L5.49.99a.5.5 0 00-1 .01v3.5l-3.5.01H1z" fill="currentColor">
-                    </path>
-                  </svg>
-                </button>
-              </quantity-controls>
+            
+            <div class="cart-item__car-type-controls">
+              <div class="cart-item__car-type-quantity">
+                <quantity-controls class="quantity cart-item__car-type-quantity-wrapper">
+                  <button 
+                    class="quantity__button no-js-hidden" 
+                    name="minus" 
+                    type="button"
+                    data-action="decrease"
+                    data-product-id="${productId}"
+                    data-car-type="${carTypeItem.type}"
+                  >
+                    <span class="visually-hidden">Decrease quantity for ${carTypeItem.type}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-minus" fill="none" viewBox="0 0 10 2">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M.5 1C.5.7.7.5 1 .5h8a.5.5 0 110 1H1A.5.5 0 01.5 1z" fill="currentColor">
+                      </path>
+                    </svg>
+                  </button>
+                  <input 
+                    class="quantity__input cart-item__car-type-quantity-input" 
+                    type="number" 
+                    name="quantity" 
+                    id="Quantity-${productId}-${carTypeItem.type.replace(/\s+/g, '-')}" 
+                    min="1" 
+                    value="${carTypeItem.quantity || 1}" 
+                    data-product-id="${productId}"
+                    data-car-type="${carTypeItem.type}"
+                    disabled
+                  >
+                  <button 
+                    class="quantity__button no-js-hidden" 
+                    name="plus" 
+                    type="button"
+                    data-action="increase"
+                    data-product-id="${productId}"
+                    data-car-type="${carTypeItem.type}"
+                  >
+                    <span class="visually-hidden">Increase quantity for ${carTypeItem.type}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-plus" fill="none" viewBox="0 0 10 10">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.51a.5.5 0 000 1h3.5l.01 3.5a.5.5 0 001-.01V5.5l3.5-.01a.5.5 0 00-.01-1H5.5L5.49.99a.5.5 0 00-1 .01v3.5l-3.5.01H1z" fill="currentColor">
+                      </path>
+                    </svg>
+                  </button>
+                </quantity-controls>
+              </div>
+              <button 
+                class="cart-item__car-type-remove" 
+                aria-label="Remove ${carTypeItem.type}" 
+                data-product-id="${productId}" 
+                data-car-type="${carTypeItem.type}">
+                <span class="visually-hidden">Remove ${carTypeItem.type}</span>
+                ×
+              </button>
             </div>
-            <button 
-              class="cart-item__car-type-remove" 
-              aria-label="Remove ${carTypeItem.type}" 
-              data-product-id="${productId}" 
-              data-car-type="${carTypeItem.type}">
-              <span class="visually-hidden">Remove ${carTypeItem.type}</span>
-              ×
-            </button>
           </div>
         `;
         
@@ -168,7 +194,10 @@ class CarTypesDisplay extends HTMLElement {
           const carType = button.dataset.carType;
           console.log('[DATA] Product ID:', productId, 'Car Type:', carType);
           
-          this.updateCarTypeCookies(productId, carType, 'remove');
+          this.updateCarTypeCookies(productId, carType, 'remove').catch(error => {
+            console.error('[ERROR] Failed to update car type cookies:', error);
+          });
+
         });
       });
       
@@ -183,7 +212,9 @@ class CarTypesDisplay extends HTMLElement {
           const carType = button.dataset.carType;
           console.log('[DATA] Product ID:', productId, 'Car Type:', carType, 'Action:', action);
           
-          this.updateCarTypeCookies(productId, carType, action);
+          this.updateCarTypeCookies(productId, carType, action).catch(error => {
+            console.error('[ERROR] Failed to update car type cookies:', error);
+          });
           
           // Update button states
           this.validateQtyRules(button.closest('quantity-controls'));
@@ -210,7 +241,9 @@ class CarTypesDisplay extends HTMLElement {
               return;
             }
             
-            this.updateCarTypeCookies(productId, carType, 'setQuantity', newQuantity);
+            this.updateCarTypeCookies(productId, carType, 'setQuantity', newQuantity).catch(error => {
+              console.error('[ERROR] Failed to update car type cookies:', error);
+            });
             
             // Update button states
             this.validateQtyRules(input.closest('quantity-controls'));
@@ -315,27 +348,32 @@ class CarTypesDisplay extends HTMLElement {
     return null;
   }
   
-  updateCarTypeCookies(productId, carType, action, quantity = 1) {
+  async updateCarTypeCookies(productId, carType, action, quantity = 1) {
     const selector = this.getCarTypeSelector();
     
     if (selector && typeof selector.updateCarTypeCookies === 'function') {
       console.log(`[ACTION] Calling updateCarTypeCookies with action: ${action}`);
-      const result = selector.updateCarTypeCookies(productId, carType, action, quantity);
-      
-      // Dispatch events for other components to listen to
-      console.log('[EVENT] Dispatching carTypeUpdated event');
-      document.dispatchEvent(new CustomEvent('carTypeUpdated', {
-        detail: { productId, carType, action, quantity }
-      }));
-      
-      // Trigger cart update event to match cart drawer behavior
-      console.log('[EVENT] Triggering cart:refresh event');
-      document.dispatchEvent(new CustomEvent('cart:refresh'));
-      
-      // Update the actual cart quantity on the server if needed
-      this.updateServerCartQuantity(productId, action, quantity);
-      
-      return result;
+      try {
+        const result = await selector.updateCarTypeCookies(productId, carType, action, quantity);
+        
+        // Dispatch events for other components to listen to
+        console.log('[EVENT] Dispatching carTypeUpdated event');
+        document.dispatchEvent(new CustomEvent('carTypeUpdated', {
+          detail: { productId, carType, action, quantity }
+        }));
+        
+        // Trigger cart update event to match cart drawer behavior
+        console.log('[EVENT] Triggering cart:refresh event');
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        
+        // Update the actual cart quantity on the server if needed
+        this.updateServerCartQuantity(productId, action, quantity);
+        
+        return result;
+      } catch (error) {
+        console.error('[ERROR] Error calling updateCarTypeCookies:', error);
+        // Continue with fallback implementation
+      }
     } else {
       console.log('[INFO] Using fallback cookie handling for action:', action);
       
@@ -555,20 +593,20 @@ class CarTypesDisplay extends HTMLElement {
     if (action === 'increase' || action === 'add') {
       newQuantity = currentQuantity + 1;
       actionName = 'plus';
-    } else if (action === 'decrease') {
+    } else if (action === 'decrease' || action === 'remove') {
       newQuantity = Math.max(1, currentQuantity - 1); // Ensure minimum of 1
       actionName = 'minus';
-    } else if (action === 'setQuantity') {
-      newQuantity = Math.max(1, quantity); // Ensure minimum of 1
-      actionName = 'set';
-    } else if (action === 'remove') {
+
       // For remove action, check if this is the last car type
       // If it is, remove the product from cart (set quantity to 0)
       const carTypes = this.getCarTypesForProduct(productId);
-      if (carTypes.length <= 1) {
+      if (action === 'remove' && carTypes.length <= 1) {
         newQuantity = 0; // Remove product from cart
       }
-    }
+    } else if (action === 'setQuantity') {
+      newQuantity = Math.max(1, quantity); // Ensure minimum of 1
+      actionName = 'set';
+    } 
     
     // Only update if quantity has changed
     if (newQuantity !== currentQuantity) {

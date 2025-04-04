@@ -4,6 +4,9 @@
 car-types-display {
   display: block;
   margin-top: 12px;
+  grid-column: 2/5;
+  margin-top: 0;
+  padding-top:0.5rem !important;
 }
 
 car-types-display {
@@ -19,7 +22,7 @@ car-types-display:hover {
 }
 
 .cart-item__car-types-heading {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 8px;
   color: #444;
@@ -31,8 +34,8 @@ car-types-display:hover {
 car-types-display .cart-item__car-types-heading::before {
   content: '';
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555555'%3E%3Cpath d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
@@ -50,7 +53,7 @@ car-types-display .cart-item__car-types-heading::before {
   display: flex;
   flex-direction: column;
   padding: 8px 0;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   transition: background-color 0.15s ease;
 }
@@ -64,42 +67,51 @@ car-types-display .cart-item__car-types-heading::before {
 }
 
 .cart-item__car-type-name {
-  width: 100%;
   font-weight: 500;
   color: #333;
   padding-left: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  width: 100%;
+  display: block;
+}
+
+.cart-item__car-type-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 4px;
+}
+
+.cart-item__car-type-quantity {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
 }
 
 .cart-item__car-type-controls {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding-left: 4px;
-  margin-top: 8px;
 }
 
-.cart-item__car-type-quantity-wrapper {
+.cart-item__car-type-quantity-wrapper.quantity {
   display: flex;
-  align-items: center;
-}
-
-.car-type-quantity-input.quantity {
-  display: flex;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  /* border-radius: 4px;
+  border: 1px solid #ddd; */
   width: auto;
-  min-width: 110px;
-  height: 32px;
+  min-width: 90px;
+  height: 28px;
   overflow: visible;
+  align-items: center;
+  min-height: auto;
 }
 
 .cart-item__car-type-quantity-input {
   color: currentColor;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   text-align: center;
-  width: 40px;
+  width: 30px;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -121,9 +133,9 @@ car-types-display .cart-item__car-types-heading::before {
   box-shadow: none;
 }
 
-.car-type-quantity-input .quantity__button {
-  width: 32px;
-  height: 32px;
+.cart-item__car-type-quantity-wrapper .quantity__button {
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,14 +147,14 @@ car-types-display .cart-item__car-types-heading::before {
   transition: all 0.2s ease;
 }
 
-.car-type-quantity-input .quantity__button:hover {
+.cart-item__car-type-quantity-wrapper .quantity__button:hover {
   color: #000;
   background-color: #f5f5f5;
 }
 
-.car-type-quantity-input .icon {
-  width: 10px;
-  height: 10px;
+.cart-item__car-type-quantity-wrapper .icon {
+  width: 8px;
+  height: 8px;
 }
 
 .cart-item__car-type-remove {
@@ -150,17 +162,16 @@ car-types-display .cart-item__car-types-heading::before {
   color: #888;
   border: 1px solid #ddd;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   padding: 0;
   line-height: 1;
   transition: all 0.2s ease;
-  margin-left: 8px;
 }
 
 .cart-item__car-type-remove:hover {
@@ -217,10 +228,7 @@ car-types-display .cart-item__car-types-heading::before {
   .cart-item__car-type {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
-  .cart-item__car-type:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
+ 
   
   .cart-item__car-type-name {
     color: #e0e0e0;
@@ -228,7 +236,6 @@ car-types-display .cart-item__car-types-heading::before {
   
   .cart-item__car-type-quantity {
     color: #bbb;
-    background-color: #3a3a3a;
   }
   
   .cart-item__car-type-quantity-button {
@@ -406,4 +413,44 @@ car-types-display .cart-item__car-types-heading::before {
 .dark .car-type-quantity-input .quantity__button:hover {
   color: #fff;
   background-color: #444;
+}
+
+.cart-item__quantity {
+  display: none !important;
+}
+
+/* Loading indicator styles */
+.cart-item__car-types-loading {
+  padding: 8px 0;
+  font-size: 1.1rem;
+  color: #777;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+}
+
+.cart-item__car-types-loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid #ddd;
+  border-top-color: #555;
+  border-radius: 50%;
+  animation: cart-loading-spinner 1s linear infinite;
+}
+
+@keyframes cart-loading-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty state styles */
+.cart-item__car-types-empty {
+  padding: 8px 0;
+  font-size: 1.1rem;
+  color: #777;
+  font-style: italic;
 }
