@@ -21,7 +21,9 @@ class CartItems extends HTMLElement {
     const debouncedOnChange = debounce((event) => {
       console.log('[CLIENT] Event changed:',event);
 
-      if (event.target.id !== 'car-types-input') {
+      if (event.target &&event.target.id === 'car-types-input') {
+        console.log('[CLIENT] Car types input changed:', event.target.value);
+      } else {
         this.onChange(event);
       }
     }, ON_CHANGE_DEBOUNCE_TIMER);

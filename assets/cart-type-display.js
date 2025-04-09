@@ -416,6 +416,7 @@ class CarTypesDisplay extends HTMLElement {
       } else if (action === 'minus') {
         // Remove car type or decrease quantity
         this.handleQuantityUpdate(cartDetails, productId, carType, quantity, false);
+
       } else if (action === 'remove') {
         // Remove the entire car type record
         console.log(`[REMOVE] Removing car type ${carType} for product ${productId}`);
@@ -436,6 +437,38 @@ class CarTypesDisplay extends HTMLElement {
           console.log(`[REMOVE] Car type ${carType} not found for removal`);
         }
       }
+      
+      // Clean up empty records before saving
+      console.log('[CLEANUP] Checking for empty car type records and product records');
+      
+      // First, clean up each product's car_types array to remove any with quantity 0
+      cartDetails.product_details.forEach(product => {
+        if (product.car_types && Array.isArray(product.car_types)) {
+          // Normalize car types to handle both string and object formats
+          const normalizedCarTypes = this.normalizeCarTypes(product.car_types);
+          
+          // Filter out car types with quantity 0
+          const filteredCarTypes = normalizedCarTypes.filter(item => item.quantity > 0);
+          console.log(`[CLEANUP] Product ${product.product_id}: Filtered car types from ${normalizedCarTypes.length} to ${filteredCarTypes.length}`);
+          
+          // Convert back to the original format (mix of strings and objects)
+          product.car_types = filteredCarTypes.map(item => {
+            if (item.quantity === 1) {
+              return item.type; // Use string format for quantity 1
+            } else {
+              return { type: item.type, quantity: item.quantity }; // Use object format for quantity > 1
+            }
+          });
+        }
+      });
+      
+      // Then, remove any products that have no car types
+      const originalProductCount = cartDetails.product_details.length;
+      cartDetails.product_details = cartDetails.product_details.filter(product => {
+        return product.car_types && product.car_types.length > 0;
+      });
+      
+      console.log(`[CLEANUP] Removed ${originalProductCount - cartDetails.product_details.length} empty product records`);
       
       // Save updated cart details cookie
       setCookie('cart_details', JSON.stringify(cartDetails), 7);
@@ -730,86 +763,63 @@ if (!customElements.get('car-types-display')) {
 document.addEventListener('DOMContentLoaded', function() {
   console.log("Cart type display script loaded");
   
-  // Initial display of car types
-  updateCartVehicleDisplay();
+  // Create a debounce function to prevent multiple rapid updates
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+  }
   
-  // Initialize the car-types-input element with the current cookie value
-  updateCarTypesInputFromCookie();
-  
-  // Listen for Shopify's cart:refresh event which is triggered when the cart is updated
-  document.addEventListener('cart:refresh', function(event) {
-    console.log("Cart refresh event detected");
+  // Consolidated update function that handles all cart update logic
+  const updateCartDisplay = debounce(function(eventType) {
+    console.log(`[CART] Updating cart display from ${eventType} event`);
+    
+    // Update the cart vehicle display
     updateCartVehicleDisplay();
     
     // Update the car-types-input element
     updateCarTypesInputFromCookie();
     
-    // Directly call updateDisplay() on all car-types-display elements
+    // Directly call updateDisplay() on all car-types-display elements after a short delay
+    // to ensure the cart data is fully updated
     setTimeout(() => {
-      console.log("Directly calling updateDisplay() from cart:refresh event");
+      console.log(`[CART] Updating car-types-display elements from ${eventType} event`);
       document.querySelectorAll('car-types-display').forEach(display => {
         if (display && typeof display.updateDisplay === 'function') {
           display.updateDisplay();
         }
       });
     }, 100);
+  }, 250); // 250ms debounce to prevent multiple rapid updates
+  
+  // Initial display of car types
+  updateCartDisplay('initial');
+  
+  // Listen for Shopify's cart:refresh event which is triggered when the cart is updated
+  document.addEventListener('cart:refresh', function(event) {
+    console.log("Cart refresh event detected");
+    updateCartDisplay('cart:refresh');
   });
   
   // Listen for Shopify's cart:added event which is triggered when an item is added to the cart
   document.addEventListener('cart:added', function(event) {
     console.log("Cart added event detected");
-    updateCartVehicleDisplay();
-    
-    // Update the car-types-input element
-    updateCarTypesInputFromCookie();
-    
-    // Directly call updateDisplay() on all car-types-display elements
-    setTimeout(() => {
-      console.log("Directly calling updateDisplay() from cart:added event");
-      document.querySelectorAll('car-types-display').forEach(display => {
-        if (display && typeof display.updateDisplay === 'function') {
-          display.updateDisplay();
-        }
-      });
-    }, 100);
+    updateCartDisplay('cart:added');
   });
   
   // Listen for Shopify's drawer open event
   document.addEventListener('drawerOpen', function(event) {
     console.log("Drawer open event detected");
-    updateCartVehicleDisplay();
-    
-    // Update the car-types-input element
-    updateCarTypesInputFromCookie();
-    
-    // Directly call updateDisplay() on all car-types-display elements
-    setTimeout(() => {
-      console.log("Directly calling updateDisplay() from drawerOpen event");
-      document.querySelectorAll('car-types-display').forEach(display => {
-        if (display && typeof display.updateDisplay === 'function') {
-          display.updateDisplay();
-        }
-      });
-    }, 100);
+    updateCartDisplay('drawerOpen');
   });
   
   // Listen for our custom event from car-type-selector.js
   document.addEventListener('carTypeAdded', function(event) {
     console.log("Car type added event detected", event.detail);
-    updateCartVehicleDisplay();
-    
-    // Update the car-types-input element
-    updateCarTypesInputFromCookie();
-    
-    // Directly call updateDisplay() on all car-types-display elements
-    setTimeout(() => {
-      console.log("Directly calling updateDisplay() from carTypeAdded event");
-      document.querySelectorAll('car-types-display').forEach(display => {
-        if (display && typeof display.updateDisplay === 'function') {
-          display.updateDisplay();
-        }
-      });
-    }, 100);
+    updateCartDisplay('carTypeAdded');
   });
   
   // Create a MutationObserver to watch for cart drawer changes

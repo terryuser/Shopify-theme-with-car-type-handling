@@ -690,7 +690,7 @@ class CarTypeSelector extends HTMLElement {
     const displayName = selectedMade + " " + selectedModel + " " + selectedYear;
     
     // Get quantity if available (default to 1)
-    const quantityInput = document.querySelector('input[name="quantity"][data-product-id="' + productId + '"]');
+    const quantityInput = document.querySelector('input.product-quantity-input[name="quantity"][data-product-id="' + productId + '"]');
     const quantity = quantityInput ? parseInt(quantityInput.value, 10) : 1;
     console.log("Product quantity:", quantity);
     
