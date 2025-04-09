@@ -440,6 +440,9 @@ class CarTypesDisplay extends HTMLElement {
       // Save updated cart details cookie
       setCookie('cart_details', JSON.stringify(cartDetails), 7);
       
+      // Update the car-types-input element with the cookie value
+      this.updateCarTypesInput(cartDetailsCookie);
+      
       // Dispatch an event to notify other components that a car type has been updated
       const event = new CustomEvent('carTypeUpdated', {
         detail: { productId, carType, action, quantity }
@@ -682,6 +685,41 @@ class CarTypesDisplay extends HTMLElement {
     
     return selector;
   }
+  
+  // Update the car-types-input element with the cookie value
+  updateCarTypesInput(cartDetailsCookie) {
+    console.log('[INPUT] Updating car-types-input element with cookie value');
+    
+    try {
+      // Find the car-types-input element
+      const carTypesInput = document.querySelector('#car-types-input');
+      
+      if (!carTypesInput) {
+        console.log('[INPUT] car-types-input element not found');
+        return;
+      }
+      
+      // Get the current cart details cookie
+      const cookieValue = this.getCookie('cart_details');
+      
+      if (!cookieValue) {
+        console.log('[INPUT] No cart_details cookie found');
+        carTypesInput.value = '';
+        return;
+      }
+      
+      console.log('[INPUT] Setting car-types-input value to:', cookieValue);
+      carTypesInput.value = cookieValue;
+      
+      // Dispatch change event to ensure Shopify's cart system picks up the change
+      const changeEvent = new Event('change', { bubbles: true });
+      carTypesInput.dispatchEvent(changeEvent);
+      
+      console.log('[INPUT] car-types-input value updated successfully');
+    } catch (error) {
+      console.error('[ERROR] Error updating car-types-input:', error);
+    }
+  }
 }
 
 // Register the custom element
@@ -695,10 +733,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial display of car types
   updateCartVehicleDisplay();
   
+  // Initialize the car-types-input element with the current cookie value
+  updateCarTypesInputFromCookie();
+  
   // Listen for Shopify's cart:refresh event which is triggered when the cart is updated
   document.addEventListener('cart:refresh', function(event) {
     console.log("Cart refresh event detected");
     updateCartVehicleDisplay();
+    
+    // Update the car-types-input element
+    updateCarTypesInputFromCookie();
     
     // Directly call updateDisplay() on all car-types-display elements
     setTimeout(() => {
@@ -716,6 +760,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Cart added event detected");
     updateCartVehicleDisplay();
     
+    // Update the car-types-input element
+    updateCarTypesInputFromCookie();
+    
     // Directly call updateDisplay() on all car-types-display elements
     setTimeout(() => {
       console.log("Directly calling updateDisplay() from cart:added event");
@@ -732,6 +779,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Drawer open event detected");
     updateCartVehicleDisplay();
     
+    // Update the car-types-input element
+    updateCarTypesInputFromCookie();
+    
     // Directly call updateDisplay() on all car-types-display elements
     setTimeout(() => {
       console.log("Directly calling updateDisplay() from drawerOpen event");
@@ -747,6 +797,9 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('carTypeAdded', function(event) {
     console.log("Car type added event detected", event.detail);
     updateCartVehicleDisplay();
+    
+    // Update the car-types-input element
+    updateCarTypesInputFromCookie();
     
     // Directly call updateDisplay() on all car-types-display elements
     setTimeout(() => {
@@ -866,5 +919,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
+  }
+  
+  // Helper function to update the car-types-input element with the current cookie value
+  function updateCarTypesInputFromCookie() {
+    console.log('[INPUT] Updating car-types-input element on page load/event');
+    
+    try {
+      // Find the car-types-input element
+      const carTypesInput = document.querySelector('#car-types-input');
+      
+      if (!carTypesInput) {
+        console.log('[INPUT] car-types-input element not found');
+        return;
+      }
+      
+      // Get the current cart details cookie
+      const cookieValue = getCookie('cart_details');
+      
+      if (!cookieValue) {
+        console.log('[INPUT] No cart_details cookie found');
+        carTypesInput.value = '';
+        return;
+      }
+      
+      console.log('[INPUT] Setting car-types-input value to:', cookieValue);
+      carTypesInput.value = cookieValue;
+      
+      // Dispatch change event to ensure Shopify's cart system picks up the change
+      const changeEvent = new Event('change', { bubbles: true });
+      carTypesInput.dispatchEvent(changeEvent);
+      
+      console.log('[INPUT] car-types-input value updated successfully');
+    } catch (error) {
+      console.error('[ERROR] Error updating car-types-input:', error);
+    }
   }
 });
